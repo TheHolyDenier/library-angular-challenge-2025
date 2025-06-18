@@ -1,0 +1,25 @@
+@use "variables/colors";
+@use 'sass:color';
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+
+  &__spinner {
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 0.35rem solid rgba(color.scale(colors.$accent, $lightness: -20%), .1);
+    border-top: 0.35rem solid color.scale(colors.$primary, $lightness: -20%);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+

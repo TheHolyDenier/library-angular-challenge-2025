@@ -1,0 +1,91 @@
+@use "variables/colors";
+@use "mixins/queries";
+@use 'sass:color';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+
+  @include queries.tablet {
+    align-items: center;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: .5rem;
+
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: colors.$primary;
+    white-space: nowrap;
+
+    &:not(:first-child) {
+      margin-block-start: 1rem;
+
+      @include queries.tablet {
+        margin-block-start: 0;
+      }
+    }
+  }
+
+  &__input {
+    padding: 8px 12px;
+    border: 1px solid colors.$light-grey;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: colors.$black;
+    background-color: colors.$white;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      border-color: colors.$accent;
+      box-shadow: 0 0 4px colors.$accent;
+      outline: none;
+    }
+
+    &::placeholder {
+      color: colors.$grey;
+    }
+
+    &:invalid.touched {
+      border-color: colors.$error;
+    }
+  }
+
+  &__error {
+    font-size: 0.8rem;
+    color: colors.$error;
+    margin-top: 4px;
+  }
+
+  button[type='submit'] {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: colors.$white;
+    background-color: colors.$primary;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: color.scale(colors.$primary, $lightness: -10%);
+    }
+
+    &:disabled {
+      background-color: colors.$grey;
+      cursor: not-allowed;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-block: 1rem;
+    grid-column: 1/-1;
+  }
+}

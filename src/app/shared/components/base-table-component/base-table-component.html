@@ -1,0 +1,56 @@
+@if (loading()) {
+    <div class="loading">
+        <div class="loading__spinner"></div>
+    </div>
+} @else if (result()) {
+    <table class="table">
+        <tr class="table__line table__line--titles">
+            @for (column of columns(); track column.name) {
+                <th class="table__title">
+                    {{ column.label }}
+                </th>
+            }
+            @if (actionTemplate()) {
+                <th class="table__title"></th>
+            }
+        </tr>
+        @for (row of result()!.data; track row.id) {
+            <tr class="table__line">
+                @for (column of columns(); track column.name) {
+                    <td class="table__cell" [attr.data-label]="column.label">
+                        {{ column.value(row) }}
+                    </td>
+                }
+                @if (actionTemplate()) {
+                    <td class="table__cell">
+                        <ng-content *ngTemplateOutlet="actionTemplate(); context: {$implicit: row}"/>
+                    </td>
+                }
+            </tr>
+        }
+
+        @if (!result()!.data.length) {
+            <div class="table__no-results">No hay resultados que mostrar</div>
+        }
+    </table>
+
+    @if (result()!.total > pageSize()) {
+        <nav class="table-pagination">
+            <button
+                    class="table-pagination__button"
+                    [disabled]="page() === 1"
+                    (click)="goToPage(page() - 1)">
+                ◀
+            </button>
+            <span class="table-pagination__label">
+                {{ page() }} / {{ Math.ceil(result()!.total / pageSize()) }}
+            </span>
+            <button
+                    class="table-pagination__button"
+                    [disabled]="page() >= Math.ceil(result()!.total / pageSize())"
+                    (click)="goToPage(page() + 1)">
+                ▶
+            </button>
+        </nav>
+    }
+}

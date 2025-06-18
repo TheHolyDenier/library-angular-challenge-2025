@@ -1,0 +1,27 @@
+<div class="library">
+    <div class="library__header">
+        <h1>Library's books</h1>
+        <a [routerLink]="['/library/new']" style="display: contents;">
+            <button class="button button--secondary">
+            <span>
+                ➕
+                <span class="library__button-label">New book</span>
+            </span>
+            </button>
+        </a>
+    </div>
+    <app-base-table [actionTemplate]="actionTemplate" [columns]="columns" [dataLoader$]="books$">
+        <ng-template #actionTemplate let-row>
+            <a [routerLink]="['/library', row.id]" style="display: contents;">
+                <button class="button button--transparent">
+                    🔗
+                </button>
+            </a>
+            <button (click)="deleteBook(row)" [disabled]="isDeleting()"
+                    class="button button--transparent">
+                🗑️
+            </button>
+
+        </ng-template>
+    </app-base-table>
+</div>

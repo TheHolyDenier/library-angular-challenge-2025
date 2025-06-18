@@ -1,0 +1,25 @@
+export const GENRE_TYPES = [
+  'romance',
+  'action',
+  'drama',
+  'fantasy',
+  'science fiction',
+  'mystery',
+  'thriller',
+  'horror',
+  'historical',
+  'biography',
+  'self-help',
+  'poetry',
+  'adventure',
+  'comedy',
+  'non-fiction',
+  'young adult',
+  'children',
+  'crime',
+  'dystopian',
+  'classic',
+  'philosophy',
+] as const;
+
+export type GenreType = (typeof GENRE_TYPES)[number];

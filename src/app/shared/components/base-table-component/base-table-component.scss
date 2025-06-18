@@ -1,0 +1,168 @@
+@use 'mixins/queries';
+@use 'variables/colors';
+@use 'sass:color';
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(50, 50, 93, 0.09);
+  font-size: 1rem;
+  table-layout: fixed;
+
+  &__title {
+    display: none;
+
+    @include queries.tablet {
+      display: table-cell;
+      background-color: color.scale(colors.$primary, $lightness: 25%);
+      color: #fff;
+      font-weight: 600;
+      padding: 1rem;
+      letter-spacing: 0.07rem;
+      text-align: left;
+      box-shadow: none;
+    }
+  }
+
+  &__line {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 1px 4px rgba(colors.$light-grey, 0.07);
+    border-radius: 0.5rem;
+    background: #fff;
+    overflow: hidden;
+    border-bottom: none;
+
+
+    @include queries.tablet {
+      display: table-row;
+      box-shadow: none;
+      border-radius: 0;
+      background: transparent;
+      margin-bottom: 0;
+      overflow: visible;
+
+      &:nth-child(even) .table__cell {
+        background-color: color.scale(colors.$accent, $lightness: 95%);
+      }
+
+      &:hover .table__cell {
+        background-color: rgba(color.scale(colors.$accent, $lightness: -20%), .1);
+      }
+
+      &:last-child .table__cell {
+        border-bottom: none;
+      }
+    }
+
+    &--titles {
+      display: none;
+
+      @include queries.tablet {
+        display: table-row;
+      }
+    }
+
+  }
+
+  &__cell {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-inline: 1rem;
+    padding-block: 2rem 1rem;
+    min-height: 2.4em;
+    border: none;
+    background: none;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: background 0.15s;
+
+    &::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      top: .9rem;
+      font-weight: 700;
+      color: rgba(color.scale(colors.$accent, $lightness: -40%), 0.5);
+      opacity: 0.8;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    &:first-child {
+      border-top: none;
+    }
+
+    @include queries.tablet {
+      display: table-cell;
+      position: static;
+      padding: 0.85rem 0.9rem;
+      min-height: initial;
+      border-top: none;
+      background: #fff;
+      box-sizing: border-box;
+      font-size: 1.05em;
+
+      &::before {
+        display: none;
+        content: none;
+      }
+    }
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .table__line:active {
+      background: rgba(color.scale(colors.$accent, $lightness: -20%), .1);
+      transition: background 0.12s;
+    }
+  }
+
+  &__no-results {
+    padding: 1rem;
+    color: colors.$primary;
+    width: 100%;
+    white-space: nowrap;
+  }
+}
+
+
+.table-pagination {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0 0 0;
+
+  &__button {
+    background: colors.$primary;
+    color: #fff;
+    border: none;
+    border-radius: 0.4rem;
+    font-size: 1.3rem;
+    padding: 0.23rem 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      background: colors.$grey;
+    }
+  }
+
+  &__label {
+    color: colors.$primary;
+    font-size: 1.08rem;
+    font-weight: 500;
+  }
+}
